@@ -1,3 +1,5 @@
 indicadores-telegram-bot.iml
 target/
+db/
+log/
 .idea/
