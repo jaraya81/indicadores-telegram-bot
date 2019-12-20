@@ -1,0 +1,10 @@
+= indicadores-telegram-bot
+Julián Araya Ramos <jaraya1807@gmail.com>
+
+:source-highlighter: rouge
+
+Ejemplo de implementación de robot Telegram (API get).
+
+== Descripción
+
+El robot dado el tipo de comando ejecutado desde Telegram registra o actualiza un registro en una base de datos.
