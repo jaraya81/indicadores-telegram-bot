@@ -1,8 +1,9 @@
 package cl.robotina.telegram.bot;
 
+import cl.robotina.telegram.enums.Msg;
 import cl.robotina.telegram.enums.State;
 import cl.robotina.telegram.model.User;
-import cl.robotina.telegram.repo.Repo;
+import cl.robotina.telegram.repo.UserRepo;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -22,7 +23,7 @@ public class IndicadoresBot {
     private static final String COMMAND_SUBSCRIBE = "/habilitar";
     private static final String COMMAND_UNSUBSCRIBE = "/deshabilitar";
 
-    private Repo repo = new Repo();
+    private UserRepo userRepo = new UserRepo();
     private String token;
     private TelegramBot bot;
 
@@ -34,51 +35,51 @@ public class IndicadoresBot {
 
     }
 
+    public IndicadoresBot end() throws Exception {
+        log.info("Ejecucion finalizada");
+        userRepo.close();
+        return this;
+    }
+
     public IndicadoresBot run() throws Exception {
 
         GetUpdatesResponse updatesResponse = bot.execute(new GetUpdates().limit(100).offset(0).timeout(0));
-        Integer lastUpdateId = null;
         for (Update update : updatesResponse.updates()) {
-            lastUpdateId = update.updateId();
+            log.info("Exec update: " + update.updateId());
             toSubscribe(update);
             toUnsubscribe(update);
+
+            bot.execute(new GetUpdates().limit(0).offset(update.updateId() + 1).timeout(0));
         }
 
-        if (lastUpdateId != null) {
-            bot.execute(new GetUpdates().limit(0).offset(lastUpdateId + 1).timeout(0));
-        }
 
         return this;
     }
 
     private void toUnsubscribe(Update update) throws Exception {
         if (update.message().text().startsWith(COMMAND_UNSUBSCRIBE)) {
-            User user = repo.getByIdUser(update.message().from().id().longValue());
+            User user = userRepo.getByIdUser(update.message().from().id().longValue());
             if (Objects.isNull(user) || user.getState().contentEquals(State.UNSUBSCRIBE.name())) {
                 return;
             }
-            log.info("Desuscribiendo usuario: " + update.message().from().username());
-            log.info("User ID:" + update.message().from().id());
-            log.info(update.toString());
+            log.info("Desuscribiendo usuario: " + update.message().from().id() + " :: " + update.message().from().username());
             user.setState(State.UNSUBSCRIBE.name());
-            repo.save(user);
-            SendMessage request = new SendMessage(update.message().chat().id(), "Usuario desuscrito en plataforma")
+            userRepo.save(user);
+            SendMessage request = new SendMessage(update.message().chat().id(), Msg.USER_UNSUBSCRIBE.code())
                     .parseMode(ParseMode.HTML)
                     .disableWebPagePreview(true)
                     .disableNotification(true);
             SendResponse sendResponse = bot.execute(request);
-            log.info(update.message().chat().id() + (sendResponse.isOk() ? "OK" : "NOK"));
+            log.info((sendResponse.isOk() ? "OK" : "NOK") + " :: " + update.message().chat().id());
         }
     }
 
 
     private void toSubscribe(Update update) throws Exception {
         if (update.message().text().startsWith(COMMAND_SUBSCRIBE)) {
-            User user = repo.getByIdUser(update.message().from().id().longValue());
+            User user = userRepo.getByIdUser(update.message().from().id().longValue());
             if (Objects.isNull(user) || !user.getState().contentEquals(State.SUBSCRIBE.name())) {
-                log.info("Suscribiendo usuario: " + update.message().from().username());
-                log.info("User ID:" + update.message().from().id());
-                log.info(update.toString());
+                log.info("Suscribiendo usuario: " + update.message().from().id() + " :: " + update.message().from().username());
                 if (Objects.isNull(user)) {
                     user = User.builder()
                             .idUser(update.message().from().id().longValue())
@@ -88,13 +89,13 @@ public class IndicadoresBot {
                 } else {
                     user.setState(State.SUBSCRIBE.name());
                 }
-                repo.save(user);
-                SendMessage request = new SendMessage(update.message().chat().id(), "Usuario suscrito en plataforma")
+                userRepo.save(user);
+                SendMessage request = new SendMessage(update.message().chat().id(), Msg.USER_SUBSCRIBE.code())
                         .parseMode(ParseMode.HTML)
                         .disableWebPagePreview(true)
                         .disableNotification(true);
                 SendResponse sendResponse = bot.execute(request);
-                log.info(update.message().chat().id() + (sendResponse.isOk() ? "OK" : "NOK"));
+                log.info((sendResponse.isOk() ? "OK" : "NOK") + " :: " + update.message().chat().id());
             }
 
         }

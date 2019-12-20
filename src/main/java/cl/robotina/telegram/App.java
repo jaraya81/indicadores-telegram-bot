@@ -33,6 +33,6 @@ public class App {
             formatter.printHelp("Indicadores Telegram Bot", options);
             throw new RuntimeException("token is empty");
         }
-        new IndicadoresBot(token).run();
+        new IndicadoresBot(token).run().end();
     }
 }

@@ -4,15 +4,16 @@ import cl.robotina.telegram.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.io.File;
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class Repo {
+public class UserRepo {
 
     private static final String NAME_DATABASE = "indicadores";
 
@@ -27,7 +28,7 @@ public class Repo {
 
     private Connection connect;
 
-    public Repo() throws Exception {
+    public UserRepo() throws Exception {
         super();
         connect = initConnection();
         preparing(TABLE);
@@ -86,8 +87,9 @@ public class Repo {
         if (Objects.isNull(idUser)) {
             return null;
         }
-        return new QueryRunner().query(connect, "SELECT * FROM " + TABLE + " WHERE " + COLUMN_ID_USER + "=?",
-                new BeanHandler<User>(User.class), idUser);
+        List<User> users = new QueryRunner().query(connect, "SELECT * FROM " + TABLE + " WHERE " + COLUMN_ID_USER + "=?",
+                new BeanListHandler<User>(User.class), idUser);
+        return !users.isEmpty() ? users.get(0) : null;
     }
 
     public Integer save(User user) throws Exception {
@@ -104,4 +106,5 @@ public class Repo {
         }
 
     }
+
 }

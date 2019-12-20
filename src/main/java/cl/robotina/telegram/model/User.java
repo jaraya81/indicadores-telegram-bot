@@ -6,7 +6,7 @@ import lombok.ToString;
 import lombok.experimental.Tolerate;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -17,8 +17,8 @@ public class User implements Serializable {
     private Long idUser;
     private String username;
     private String state;
-    private Date datecreation;
-    private Date dateupdate;
+    private Timestamp datecreation;
+    private Timestamp dateupdate;
 
     @Tolerate
     public User() {
