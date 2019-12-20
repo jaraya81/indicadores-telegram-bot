@@ -1,9 +1,9 @@
 package com.github.jaraya81.telegram.enums;
 
 public enum Msg {
-    USER_SUBSCRIBE("USER_SUBSCRIBE"),
-    USER_UNSUBSCRIBE("USER_UNSUBSCRIBE"),
-
+    USER_PLAY("USER_PLAY"),
+    USER_PAUSE("USER_PAUSE"),
+    USD_RESULT("USD_RESULT"),
     ;
 
     private String code;
