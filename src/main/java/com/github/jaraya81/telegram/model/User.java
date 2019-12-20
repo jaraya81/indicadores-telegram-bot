@@ -1,4 +1,4 @@
-package cl.robotina.telegram.model;
+package com.github.jaraya81.telegram.model;
 
 import lombok.Builder;
 import lombok.Data;

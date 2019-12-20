@@ -1,4 +1,4 @@
-package cl.robotina.telegram.enums;
+package com.github.jaraya81.telegram.enums;
 
 public enum State {
 

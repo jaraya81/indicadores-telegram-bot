@@ -1,4 +1,4 @@
-package cl.robotina.telegram.enums;
+package com.github.jaraya81.telegram.enums;
 
 public enum Msg {
     USER_SUBSCRIBE("USER_SUBSCRIBE"),

@@ -1,6 +1,6 @@
-package cl.robotina.telegram.repo;
+package com.github.jaraya81.telegram.repo;
 
-import cl.robotina.telegram.model.User;
+import com.github.jaraya81.telegram.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;

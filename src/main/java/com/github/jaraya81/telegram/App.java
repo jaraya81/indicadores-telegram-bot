@@ -1,6 +1,6 @@
-package cl.robotina.telegram;
+package com.github.jaraya81.telegram;
 
-import cl.robotina.telegram.bot.IndicadoresBot;
+import com.github.jaraya81.telegram.bot.IndicadoresBot;
 import lombok.SneakyThrows;
 import org.apache.commons.cli.*;
 

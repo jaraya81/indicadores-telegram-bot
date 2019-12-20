@@ -1,9 +1,9 @@
-package cl.robotina.telegram.bot;
+package com.github.jaraya81.telegram.bot;
 
-import cl.robotina.telegram.enums.Msg;
-import cl.robotina.telegram.enums.State;
-import cl.robotina.telegram.model.User;
-import cl.robotina.telegram.repo.UserRepo;
+import com.github.jaraya81.telegram.enums.Msg;
+import com.github.jaraya81.telegram.enums.State;
+import com.github.jaraya81.telegram.model.User;
+import com.github.jaraya81.telegram.repo.UserRepo;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;

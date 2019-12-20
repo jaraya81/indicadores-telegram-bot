@@ -1,4 +1,4 @@
-package cl.robotina.telegram;
+package com.github.jaraya81.telegram;
 
 import static org.junit.Assert.assertTrue;
 
