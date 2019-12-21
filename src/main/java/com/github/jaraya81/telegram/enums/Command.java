@@ -2,13 +2,13 @@ package com.github.jaraya81.telegram.enums;
 
 public enum Command {
 
-    PLAY_SLASH("/play"),
+    START("/start"),
     PLAY("PLAY"),
-    PAUSE_SLASH("/pause"),
     PAUSE("PAUSE"),
     GET_USD("USD"),
     GET_EUR("EUR"),
-    GET_BTC("BTC");;
+    GET_BTC("BTC"),
+    ;
 
     private String code;
 

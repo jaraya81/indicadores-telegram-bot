@@ -1,6 +1,7 @@
 package com.github.jaraya81.telegram.enums;
 
 public enum Msg {
+    START("WELCOME_START"),
     USER_PLAY("USER_PLAY"),
     USER_PAUSE("USER_PAUSE"),
     USD_RESULT("USD_RESULT"),

@@ -50,7 +50,7 @@ public class UserRepo {
     private void preparing(String tableName) throws Exception {
         if (!tableExist(tableName)) {
             String sql = String.format(
-                    "create table %s (%s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL, %s DATETIME NOT NULL, %s DATETIME NOT NULL)", tableName,
+                    "create table %s (%s INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, %s TEXT, %s TEXT NOT NULL, %s DATETIME NOT NULL, %s DATETIME NOT NULL)", tableName,
                     COLUMN_ID, COLUMN_ID_USER, COLUMN_USERNAME, COLUMN_STATE, COLUMN_CREATION, COLUMN_UPDATE);
             log.info(sql);
             new QueryRunner().update(connect, sql);
@@ -93,7 +93,7 @@ public class UserRepo {
     }
 
     public Integer save(User user) throws Exception {
-        if (Objects.isNull(user) || Objects.isNull(user.getIdUser()) || Objects.isNull(user.getState()) || Objects.isNull(user.getUsername())) {
+        if (Objects.isNull(user) || Objects.isNull(user.getIdUser()) || Objects.isNull(user.getState())) {
             return null;
         }
         if (Objects.isNull(user.getId())) {
