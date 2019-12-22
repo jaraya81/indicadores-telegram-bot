@@ -7,6 +7,7 @@ import lombok.experimental.Tolerate;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -23,5 +24,9 @@ public class User implements Serializable {
     @Tolerate
     public User() {
         super();
+    }
+
+    public static boolean exist(User user) {
+        return Objects.nonNull(user);
     }
 }
